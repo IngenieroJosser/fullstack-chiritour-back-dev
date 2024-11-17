@@ -2,12 +2,19 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { sequelize } = require('./models/Reserva_SQL');
 const reservasRoutes = require('./routes/reservasRoutesSQL');
+const usersRoutesSQL = require('./routes/usersRoutesSQL');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
 
 const app = express();
 app.use(bodyParser.json());
 
+// Configuración de Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Rutas
 app.use('/api/reservas', reservasRoutes);
+app.use('/api/users', usersRoutesSQL);
 
 // Conexión a la base de datos y servidor
 sequelize.sync().then(() => {
