@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2024 a las 05:36:39
+-- Tiempo de generación: 17-11-2024 a las 06:48:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -190,9 +190,17 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `categoria` varchar(255) DEFAULT NULL,
   `rol` enum('admin','cliente') DEFAULT 'cliente',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `categoria`, `rol`, `createdAt`, `updatedAt`) VALUES
+(2, 'lucas', 'lcchaverra@mail.com', '123456', 'admin', 'admin', '2024-11-17 00:00:00', '2024-11-17 05:44:14'),
+(3, 'josser', 'josser@mail.com', '1234563', 'admin', 'admin', '2024-11-17 00:00:00', '2024-11-17 05:47:12');
 
 --
 -- Índices para tablas volcadas
@@ -358,7 +366,7 @@ ALTER TABLE `tour_experiences`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
