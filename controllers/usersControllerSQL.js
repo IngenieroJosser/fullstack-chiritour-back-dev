@@ -1,9 +1,14 @@
 const { Users } = require('../models/user_SQL');
+const bcrypt = require('bcryptjs');
+const { generateToken } = require('../utils/jwt');
 
 const ControllerUserSQL = {
     // Crear un nuevo usuario
     createUser: async (req, res) => {
       try {
+        const { password } = req.body;
+        const hashedPassword = bcrypt.hash(password, 10);
+        req.body.password = hashedPassword;
         const newUser = await Users.create(req.body);
         res.status(201).json(newUser);
       } catch (error) {
@@ -53,6 +58,25 @@ const ControllerUserSQL = {
         res.status(500).json({ error: error.message });
       }
     },
+
+    //Login del usuario
+    login: async (req, res) => {
+      try {
+        const { email, password } = req.body;
+        const user = await Users.findOne({ where: { email } });
+        if (!user) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          return res.status(401).json({ message: 'Contraseña incorrecta' });
+        }
+        const token = generateToken(user);
+        res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+      } catch (err) {
+        res.status(500).json({ message: 'Error al iniciar sesión', error: err.message });
+      }
+    }
 }
 
 module.exports = ControllerUserSQL;

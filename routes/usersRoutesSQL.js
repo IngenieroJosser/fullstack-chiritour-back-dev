@@ -195,4 +195,42 @@ router.put('/:id', usersController.updateUser);        // Actualizar un usuario
  */
 router.delete('/:id', usersController.deleteUser);     // Eliminar un usuario
 
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Obtiene un usuario y verifica que este esté registrado en el sistema para permitirle el acceso
+ *     tags: [users]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: nombre de usuario
+ *       - in: path
+ *         name: password
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: contraseña del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario logueado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID del usuario
+ *                 name:
+ *                   type: string
+ *                   description: Nombre de usuario
+ *       404:
+ *         description: Usuario no encontrado
+ */
+router.post('/login', usersController.login)
+
 module.exports = router;
