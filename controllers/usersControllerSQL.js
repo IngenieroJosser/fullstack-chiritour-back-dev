@@ -8,7 +8,7 @@ const ControllerUserSQL = {
       try {
         const { password } = req.body;
         const hashedPassword = bcrypt.hash(password, 10);
-        req.body.password = hashedPassword;
+        req.body.password = (await (hashedPassword)).toString();
         const newUser = await Users.create(req.body);
         res.status(201).json(newUser);
       } catch (error) {
@@ -62,8 +62,8 @@ const ControllerUserSQL = {
     //Login del usuario
     login: async (req, res) => {
       try {
-        const { email, password } = req.body;
-        const user = await Users.findOne({ where: { email } });
+        const { name, password } = req.body;
+        const user = await Users.findOne({ where: { name: name } });
         if (!user) {
           return res.status(404).json({ message: 'Usuario no encontrado' });
         }

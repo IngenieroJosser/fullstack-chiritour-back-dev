@@ -201,19 +201,19 @@ router.delete('/:id', usersController.deleteUser);     // Eliminar un usuario
  *   post:
  *     summary: Obtiene un usuario y verifica que este esté registrado en el sistema para permitirle el acceso
  *     tags: [users]
- *     parameters:
- *       - in: path
- *         name: username
- *         required: true
- *         schema:
- *           type: string
- *         description: nombre de usuario
- *       - in: path
- *         name: password
- *         required: true
- *         schema:
- *           type: string
- *         description: contraseña del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: Nombre del usuario
+ *               password:
+ *                 type: string
+ *                 description: contraseña del usuario
  *     responses:
  *       200:
  *         description: Usuario logueado
