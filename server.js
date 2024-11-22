@@ -5,12 +5,14 @@ const reservasRoutes = require('./routes/reservasRoutesSQL');
 const usersRoutesSQL = require('./routes/usersRoutesSQL');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
+const cors = require('cors')
 
 const app = express();
 app.use(bodyParser.json());
 
 // Configuración de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(cors());
 
 // Rutas
 app.use('/api/reservas', reservasRoutes);
