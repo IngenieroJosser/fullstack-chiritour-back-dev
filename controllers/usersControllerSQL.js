@@ -40,8 +40,17 @@ const ControllerUserSQL = {
     // Actualizar un usuario
     updateUser: async (req, res) => {
       try {
+        if (req.body.password) {
+          const resulUpdate = await bcrypt.genSalt(10);
+          req.body.password = await bcrypt.hash(req.body.password, resulUpdate);
+        }
+
         const resultado = await Users.update(req.body, { where: { id: req.params.id } });
-        if (resultado[0] === 0) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+        if (resultado[0] === 0) {
+          return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
         res.status(200).json({ message: 'Usuario actualizado' });
       } catch (error) {
         res.status(500).json({ error: error.message });
