@@ -5,11 +5,12 @@ require('dotenv').config();
 const dropbox = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
 
 const DropboxController = {
-  uploadFile: async (req, res) => {
+  // Subir archivo a Dropbox y devolver el enlace público
+  uploadFile: async (req) => {
     try {
       // Verificar que se subió un archivo
       if (!req.file) {
-        return res.status(400).json({ error: 'No se subió ningún archivo.' });
+        throw new Error('No se subió ningún archivo.');
       }
 
       const filePath = req.file.path; // Ruta temporal del archivo
@@ -18,7 +19,7 @@ const DropboxController = {
 
       // Subir archivo a Dropbox
       const dropboxResponse = await dropbox.filesUpload({
-        path: `/${fileName}`,
+        path: `/${fileName}`, // Guardar con el nombre original
         contents: fileContents,
       });
 
@@ -27,15 +28,15 @@ const DropboxController = {
         path: dropboxResponse.result.path_lower,
       });
 
-      // Eliminar archivo temporal
+      // Eliminar archivo temporal local
       fs.unlinkSync(filePath);
 
-      // Enviar respuesta con la URL pública
-      const publicUrl = sharedLink.result.url.replace('?dl=0', '?raw=1');
-      res.status(200).json({ url: publicUrl });
+      // Devolver la URL pública del archivo
+      return {
+        url: sharedLink.result.url.replace('?dl=0', '?raw=1'), // Cambiar para obtener un enlace directo
+      };
     } catch (error) {
-      console.error('Error al subir archivo a Dropbox:', error);
-      res.status(500).json({ error: 'Error al subir archivo a Dropbox.' });
+      throw new Error(`Error al subir archivo a Dropbox: ${error.message}`);
     }
   },
 };

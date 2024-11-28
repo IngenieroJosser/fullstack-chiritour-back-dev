@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' }); // Configura destino temporal
 const multimediaController = require('../controllers/multimediaController');
 
 // Rutas para el multimedia
@@ -126,15 +128,19 @@ router.get('/related/:related_id', multimediaController.getMultimediaByRelatedId
  * @swagger
  * /api/multimedia:
  *   post:
- *     summary: Crea un nuevo multimedia
+ *     summary: Crea un nuevo multimedia con subida de archivo
  *     tags: [multimedia]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: Archivo multimedia a subir
  *               related_type:
  *                 type: string
  *                 description: Tipo relacionado (location, route, booking, experience)
@@ -144,20 +150,41 @@ router.get('/related/:related_id', multimediaController.getMultimediaByRelatedId
  *               type:
  *                 type: string
  *                 description: Tipo de multimedia (por ejemplo, imagen, video)
- *               url:
- *                 type: string
- *                 description: URL del multimedia
  *     responses:
  *       201:
  *         description: Multimedia creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id_multimedia:
+ *                   type: integer
+ *                   description: ID del multimedia creado
+ *                 related_type:
+ *                   type: string
+ *                   description: Tipo relacionado
+ *                 related_id:
+ *                   type: integer
+ *                   description: ID relacionado
+ *                 type:
+ *                   type: string
+ *                   description: Tipo de multimedia
+ *                 url:
+ *                   type: string
+ *                   description: URL del archivo subido
+ *       400:
+ *         description: Error en la solicitud o archivo faltante
+ *       500:
+ *         description: Error interno del servidor
  */
-router.post('/', multimediaController.createMultimedia);  // Crear un nuevo multimedia
+router.post('/', upload.single('file'), multimediaController.createMultimedia);
 
 /**
  * @swagger
  * /api/multimedia/{id}:
  *   put:
- *     summary: Actualiza un multimedia existente
+ *     summary: Actualiza un multimedia existente, incluyendo la subida de un nuevo archivo
  *     tags: [multimedia]
  *     parameters:
  *       - in: path
@@ -169,29 +196,40 @@ router.post('/', multimediaController.createMultimedia);  // Crear un nuevo mult
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: Archivo multimedia a subir (opcional)
  *               related_type:
  *                 type: string
  *                 description: Tipo relacionado (location, route, booking, experience)
  *               related_id:
  *                 type: integer
- *                 description: ID relacionado con el tipo (location, route, etc.)
+ *                 description: ID relacionado con el tipo
  *               type:
  *                 type: string
- *                 description: Tipo de multimedia (por ejemplo, imagen, video)
- *               url:
- *                 type: string
- *                 description: URL del multimedia
+ *                 description: Tipo de multimedia
  *     responses:
  *       200:
  *         description: Multimedia actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmación de éxito
  *       404:
  *         description: Multimedia no encontrado
+ *       500:
+ *         description: Error interno del servidor
  */
-router.put('/:id', multimediaController.updateMultimedia);  // Actualizar un multimedia
+router.put('/:id', upload.single('file'), multimediaController.updateMultimedia);
 
 /**
  * @swagger

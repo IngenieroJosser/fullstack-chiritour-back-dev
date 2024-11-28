@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2024 at 08:59 AM
+-- Generation Time: Nov 28, 2024 at 10:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,6 +63,14 @@ CREATE TABLE `experiencia` (
   `capacidad` int(11) NOT NULL,
   `estado` enum('Disponible','No disponible') DEFAULT 'Disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `experiencia`
+--
+
+INSERT INTO `experiencia` (`id_experiencia`, `id_ruta`, `fecha_realizacion`, `capacidad`, `estado`) VALUES
+(1, 1, '2024-12-09', 50, 'Disponible'),
+(2, 2, '2024-12-05', 25, 'Disponible');
 
 -- --------------------------------------------------------
 
@@ -144,6 +152,14 @@ CREATE TABLE `ruta` (
   `imagen_cabecera` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ruta`
+--
+
+INSERT INTO `ruta` (`id_ruta`, `nombre`, `id_ubicacion`, `descripcion`, `duracion`, `precio_base`, `imagen_cabecera`) VALUES
+(1, 'Atrato', 1, 'Es el Rio Atrato', 3, 110000.00, 'c'),
+(2, 'Tutunendo', 3, 'Es el Rio Tutunendo', 2, 150000.00, 'c');
+
 -- --------------------------------------------------------
 
 --
@@ -164,7 +180,8 @@ CREATE TABLE `ubicacion` (
 --
 
 INSERT INTO `ubicacion` (`id_ubicacion`, `nombre`, `descripcion`, `departamento`, `municipio`, `imagen_cabecera`) VALUES
-(1, 'Atrato', 'Rio Atrato', 'Choco', 'Quibdo', '');
+(1, 'Atrato', 'Rio Atrato', 'Choco', 'Quibdo', ''),
+(3, 'Tutunendo', 'Rio Tutunendo', 'Choco', 'Quidbo', 'otra');
 
 -- --------------------------------------------------------
 
@@ -219,8 +236,7 @@ ALTER TABLE `experiencia`
 -- Indexes for table `multimedia`
 --
 ALTER TABLE `multimedia`
-  ADD PRIMARY KEY (`id_multimedia`),
-  ADD KEY `related_id` (`related_id`);
+  ADD PRIMARY KEY (`id_multimedia`);
 
 --
 -- Indexes for table `plan`
@@ -283,7 +299,7 @@ ALTER TABLE `cupo`
 -- AUTO_INCREMENT for table `experiencia`
 --
 ALTER TABLE `experiencia`
-  MODIFY `id_experiencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_experiencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `multimedia`
@@ -313,13 +329,13 @@ ALTER TABLE `reservas`
 -- AUTO_INCREMENT for table `ruta`
 --
 ALTER TABLE `ruta`
-  MODIFY `id_ruta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ruta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  MODIFY `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -348,15 +364,6 @@ ALTER TABLE `cupo`
 --
 ALTER TABLE `experiencia`
   ADD CONSTRAINT `experiencia_ibfk_1` FOREIGN KEY (`id_ruta`) REFERENCES `ruta` (`id_ruta`);
-
---
--- Constraints for table `multimedia`
---
-ALTER TABLE `multimedia`
-  ADD CONSTRAINT `multimedia_ibfk_1` FOREIGN KEY (`related_id`) REFERENCES `ubicacion` (`id_ubicacion`) ON DELETE CASCADE,
-  ADD CONSTRAINT `multimedia_ibfk_2` FOREIGN KEY (`related_id`) REFERENCES `ruta` (`id_ruta`) ON DELETE CASCADE,
-  ADD CONSTRAINT `multimedia_ibfk_3` FOREIGN KEY (`related_id`) REFERENCES `experiencia` (`id_experiencia`) ON DELETE CASCADE,
-  ADD CONSTRAINT `multimedia_ibfk_4` FOREIGN KEY (`related_id`) REFERENCES `reserva` (`id_reserva`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `plan`
