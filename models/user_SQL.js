@@ -25,8 +25,9 @@ const Users = sequelize.define('users', {
     },
     rol: {
         type: DataTypes.ENUM('admin', 'cliente'),
-        allowNull: true,
-    },
+        allowNull: false,
+        defaultValue: 'cliente', // Valor predeterminado
+      },
     createdAt: {
         type: DataTypes.TIME,
         allowNull: false,
