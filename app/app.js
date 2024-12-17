@@ -1,22 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { sequelize } = require('./models/Reserva_SQL');
-const pagosRoutes = require('./routes/pagosRoutes');
-const reservasRoutes = require('./routes/reservasRoutesSQL');
-const usersRoutesSQL = require('./routes/usersRoutesSQL');
-const dropboxRoutes = require('./routes/dropboxRoutes');
-const localitationsRoutes = require('./routes/locationsRoutes');
-const routesRoutes = require('./routes/routesRoutesSQL');
-const experiencesRoutes = require('./routes/experiencesRoutes');
-const bookingsRoutes = require('./routes/bookingsRoutes');
-const plansRoutes = require('./routes/plansRoutes');
-const buyersRoutes = require('./routes/buyersRoutes');
-const quotasRoutes = require('./routes/quotasRoutes');
-const multimediaRoutes = require('./routes/multimediasRoutes');
+const { sequelize } = require('../models/Reserva_SQL.js');
+const pagosRoutes = require('../routes/pagosRoutes.js');
+const reservasRoutes = require('../routes/reservasRoutesSQL.js');
+const usersRoutesSQL = require('../routes/usersRoutesSQL.js');
+const dropboxRoutes = require('../routes/dropboxRoutes.js');
+const localitationsRoutes = require('../routes/locationsRoutes.js');
+const routesRoutes = require('../routes/routesRoutesSQL.js');
+const experiencesRoutes = require('../routes/experiencesRoutes.js');
+const bookingsRoutes = require('../routes/bookingsRoutes.js');
+const plansRoutes = require('../routes/plansRoutes.js');
+const buyersRoutes = require('../routes/buyersRoutes.js');
+const quotasRoutes = require('../routes/quotasRoutes.js');
+const multimediaRoutes = require('../routes/multimediasRoutes.js');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger');
+const swaggerSpec = require('../swagger.js');
 const cors = require('cors')
-const portInitServ = require('./config.js').portInitServ;
+const portInitServ = require('../config.js').portInitServ;
 
 const app = express();
 app.use(bodyParser.json());
