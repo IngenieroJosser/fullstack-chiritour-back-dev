@@ -1,3 +1,4 @@
+-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
@@ -205,26 +206,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `categoria`, `rol`, `createdAt`, `updatedAt`) VALUES
 (4, 'Alejandro', 'alejandro@gmail.com', '$2a$10$yAUjcfGEDZNTX7eJYfDoe.TnRa5w8E4ipMXHSnI.pZRonumJ3E0Fy', 'admin', 'admin', '2024-11-28 00:00:00', '2024-11-28 00:50:53');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pagos`
---
-
-CREATE TABLE `pagos` (
-  `id_pago` int(11) NOT NULL AUTO_INCREMENT,
-  `id_reserva` int(11) NOT NULL,
-  `estado` varchar(50) DEFAULT NULL,
-  `monto` decimal(10,2) DEFAULT NULL,
-  `fecha_pago` datetime NOT NULL,
-  `respuesta_payu` text DEFAULT NULL,
-  PRIMARY KEY (`id_pago`),
-  KEY `id_reserva` (`id_reserva`),
-  CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id_reserva`) REFERENCES `reserva` (`id_reserva`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables

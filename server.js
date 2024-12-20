@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { sequelize } = require('./models/Reserva_SQL');
-const pagosRoutes = require('./routes/pagosRoutes');
 const reservasRoutes = require('./routes/reservasRoutesSQL');
 const usersRoutesSQL = require('./routes/usersRoutesSQL');
 const dropboxRoutes = require('./routes/dropboxRoutes');
@@ -16,7 +15,6 @@ const multimediaRoutes = require('./routes/multimediasRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 const cors = require('cors')
-const portInitServ = require('./config.js').portInitServ;
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,7 +23,6 @@ app.use(bodyParser.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(cors());
 
-app.use('/api/pagos', pagosRoutes); // Agregar esta línea para las rutas de pagos
 // Rutas
 app.use('/api/reservas', reservasRoutes);
 app.use('/api/users', usersRoutesSQL);
@@ -41,9 +38,9 @@ app.use('/api/multimedia', multimediaRoutes);
 
 // Conexión a la base de datos y servidor
 sequelize.sync().then(() => {
-  app.listen(portInitServ.port, () => {
-console.log(`Servidor corriendo en http://localhost:${portInitServ.port}`);
-    console.log(`Servidor corriendo en http://localhost:${portInitServ.port}/api-docs`);
+  app.listen(3000, () => {
+    console.log('Servidor corriendo en http://localhost:3000');
+    console.log('Servidor corriendo en http://localhost:3000/api-docs');
     console.log('Conectado a la base de datos MySQL');
   });
 }).catch(err => {
