@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app/app.js",
-    "server": "nodemon app/app.js"
+    "start": "node app.js",
+    "server": "nodemon app.js"
   },
   "keywords": [],
   "author": "Josser Cordoba Rivas",
