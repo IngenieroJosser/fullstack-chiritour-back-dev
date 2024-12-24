@@ -207,4 +207,48 @@ router.put('/:id_experiencia', experiencesController.updateExperience);
  */
 router.delete('/:id_experiencia', experiencesController.deleteExperience);
 
+/**
+ * @swagger
+ * /experiences-with-routes:
+ *   get:
+ *     summary: Obtener todas las experiencias con sus rutas relacionadas
+ *     description: Esta ruta devuelve una lista de todas las experiencias junto con las rutas asociadas, incluyendo solo los atributos 'nombre' y 'id_ruta' de las rutas.
+ *     responses:
+ *       200:
+ *         description: Lista de experiencias con rutas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id_experience:
+ *                     type: integer
+ *                     description: ID de la experiencia
+ *                   nombre_experience:
+ *                     type: string
+ *                     description: Nombre de la experiencia
+ *                   ruta:
+ *                     type: object
+ *                     properties:
+ *                       id_ruta:
+ *                         type: integer
+ *                         description: ID de la ruta
+ *                       nombre:
+ *                         type: string
+ *                         description: Nombre de la ruta
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Descripción del error
+ */
+router.get('/experiences-with-routes', experiencesController.getExperiencesWithRoutes);
+
 module.exports = router;
