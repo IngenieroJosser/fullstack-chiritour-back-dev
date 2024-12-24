@@ -6,9 +6,9 @@ const ControllerBuyers = {
     try {
       const buyers = await Buyers.findAll(); // Obtiene todos los compradores
 
-      if (buyers.length === 0) {
-        return res.status(404).json({ message: 'No se encontraron compradores.' });
-      }
+      // if (buyers.length === 0) {
+      //   return res.status(404).json({ message: 'No se encontraron compradores.' });
+      // }
 
       res.status(200).json(buyers);
     } catch (error) {

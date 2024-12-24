@@ -5,11 +5,9 @@ const ControllerQuotas = {
   getAllQuotas: async (req, res) => {
     try {
       const quotas = await Quotas.findAll();  // Obtiene todos los cupos
-
-      if (quotas.length === 0) {
-        return res.status(404).json({ message: 'No se encontraron cupos.' });
-      }
-
+      // if (quotas.length === 0) {
+      //   return res.status(404).json({ message: 'No se encontraron cupos.' });
+      // }
       res.status(200).json(quotas);
     } catch (error) {
       res.status(500).json({ error: error.message });

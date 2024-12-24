@@ -13,5 +13,11 @@ module.exports = {
         user: process.env.MONGO_USER,
         pass: process.env.MONGO_PASS,
         port: process.env.MONGO_PORT
+    },
+
+    portInitServ:{
+        port: process.env.PORT || 3000
     }
+
 }
+

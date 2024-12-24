@@ -53,12 +53,19 @@ const ControllerMultimediaSQL = {
     // Obtener multimedia por `related_id`
     getMultimediaByRelatedId: async (req, res) => {
         try {
+            const { related_id, related_type } = req.params; // Extraer ambos parámetros
+    
             const multimedia = await Multimedia.findAll({
-                where: { related_id: req.params.related_id }
+                where: {
+                    related_id: related_id,
+                    related_type: related_type // Filtrar también por related_type
+                }
             });
+    
             if (!multimedia || multimedia.length === 0) {
-                return res.status(404).json({ message: 'Multimedia no encontrado para este related_id' });
+                return res.status(404).json({ message: 'Multimedia no encontrado para este related_id y related_type' });
             }
+    
             res.status(200).json(multimedia);
         } catch (error) {
             res.status(500).json({ error: error.message });

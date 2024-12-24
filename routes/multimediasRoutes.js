@@ -83,9 +83,9 @@ router.get('/:id', multimediaController.getMultimediaById);  // Obtener un multi
 
 /**
  * @swagger
- * /api/multimedia/related/{related_id}:
+ * /api/multimedia/related/{related_id}/{related_type}:
  *   get:
- *     summary: Obtiene multimedia por related_id
+ *     summary: Obtiene multimedia por related_id y related_type
  *     tags: [multimedia]
  *     parameters:
  *       - in: path
@@ -94,6 +94,12 @@ router.get('/:id', multimediaController.getMultimediaById);  // Obtener un multi
  *         schema:
  *           type: integer
  *         description: ID relacionado con el tipo (location, route, etc.)
+ *       - in: path
+ *         name: related_type
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Tipo relacionado (location, route, booking, experience)
  *     responses:
  *       200:
  *         description: Lista de multimedia encontrados
@@ -120,9 +126,9 @@ router.get('/:id', multimediaController.getMultimediaById);  // Obtener un multi
  *                     type: string
  *                     description: URL del multimedia
  *       404:
- *         description: No se encontró multimedia para este related_id
+ *         description: No se encontró multimedia para este related_id y related_type
  */
-router.get('/related/:related_id', multimediaController.getMultimediaByRelatedId);  // Obtener multimedia por related_id
+router.get('/related/:related_id/:related_type', multimediaController.getMultimediaByRelatedId); // Obtener multimedia por related_id
 
 /**
  * @swagger
