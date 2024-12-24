@@ -76,6 +76,22 @@ const ControllerExperienceSQL = {
             res.status(500).json({ error: error.message });
         }
     },
+
+    // Obtener todas las experiencias con sus rutas relacionadas
+    getExperiencesWithRoutes: async (req, res) => {
+        try {
+            const experiencesWithRoutes = await Experiences.findAll({
+                include: {
+                    model: Routes, // Relación con el modelo Routes
+                    as: 'ruta',    // Alias utilizado en la asociación
+                    attributes: ['nombre', 'id_ruta'] // Selecciona solo los atributos necesarios
+                }
+            });
+            res.status(200).json(experiencesWithRoutes);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 };
 
 module.exports = ControllerExperienceSQL;
