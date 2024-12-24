@@ -19,6 +19,6 @@ router.put('/:id', reservaController.updateReserva);
 router.delete('/:id', reservaController.deleteReserva);
 
 
-router.get('/', reservaController.getReservationsWithRouteAndLocation);
+router.get('/raw-reservas', reservaController.getReservationsWithRouteAndLocation);
 
 module.exports = router;

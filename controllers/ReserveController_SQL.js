@@ -61,19 +61,23 @@ const ControllerReservaSQL = {
           include: [
             {
               model: Routes,
-              as: 'ruta', // Alias definido en la relación
+              as: 'ruta',
               include: [
                 {
                   model: Locations,
-                  as: 'ubicacion', // Alias definido en la relación
+                  as: 'ubicacion',
+                  attributes: ['nombre', 'departamento', 'municipio'], // Campos específicos
                 },
               ],
+              attributes: ['nombre', 'descripcion'], // Campos específicos
             },
           ],
+          attributes: ['id', 'destino', 'fecha_inicio', 'fecha_fin', 'numero_personas', 'tipo_tour'], // Campos de `Reserva`
         });
   
         res.status(200).json(reservas);
       } catch (error) {
+        console.error('Error al obtener reservas:', error);
         res.status(500).json({ error: error.message });
       }
     },

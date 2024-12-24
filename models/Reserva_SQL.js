@@ -44,10 +44,10 @@ const Reserva = sequelize.define('Reserva', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  id_ruta: {
-    type: DataTypes.INTEGER, // Clave foránea hacia la tabla `ruta`
-    allowNull: false,
-  },
+  id_ruta: { 
+    type: DataTypes.INTEGER, 
+    allowNull: false 
+  }, // Clave foránea hacia `ruta`
 });
 
 // Relación: Reserva pertenece a una Ruta
