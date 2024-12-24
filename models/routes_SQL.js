@@ -1,5 +1,6 @@
 const { mysql_database } = require('../config');
 const { Sequelize, DataTypes } = require('sequelize');
+const { Locations } = require('./location_SQL'); // Importa el modelo relacionado
 
 const sequelize = new Sequelize(`${mysql_database.db}`, `${mysql_database.user}`, `${mysql_database.pass}`, {
   host: `${mysql_database.host}`,
@@ -41,5 +42,8 @@ const Routes = sequelize.define('ruta', {
   tableName: 'ruta',  // Especifica el nombre de la tabla en la base de datos
   timestamps: false,  // Desactivar los campos 'createdAt' y 'updatedAt' si no existen en la tabla
 });
+
+// Relación: Ruta pertenece a una Ubicación
+Routes.belongsTo(Locations, { foreignKey: 'id_ubicacion', as: 'ubicacion' });
 
 module.exports = { Routes, sequelize };

@@ -1,4 +1,5 @@
 const {mysql_database} = require('../config')
+const { Routes } = require('./routes_SQL'); // Importa el modelo relacionado
 
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(`${mysql_database.db}`, `${mysql_database.user}`, `${mysql_database.pass}`, {
@@ -43,6 +44,13 @@ const Reserva = sequelize.define('Reserva', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  id_ruta: {
+    type: DataTypes.INTEGER, // Clave foránea hacia la tabla `ruta`
+    allowNull: false,
+  },
 });
+
+// Relación: Reserva pertenece a una Ruta
+Reserva.belongsTo(Routes, { foreignKey: 'id_ruta', as: 'ruta' });
 
 module.exports = { Reserva, sequelize };

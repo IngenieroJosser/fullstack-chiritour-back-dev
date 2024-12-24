@@ -53,6 +53,30 @@ const ControllerReservaSQL = {
         res.status(500).json({ error: error.message });
       }
     },
+
+    // Obtener todas la reservas con las rutas y ubicaciones
+    getReservationsWithRouteAndLocation: async (req, res) => {
+      try {
+        const reservas = await Reserva.findAll({
+          include: [
+            {
+              model: Routes,
+              as: 'ruta', // Alias definido en la relación
+              include: [
+                {
+                  model: Locations,
+                  as: 'ubicacion', // Alias definido en la relación
+                },
+              ],
+            },
+          ],
+        });
+  
+        res.status(200).json(reservas);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    },
 }
 
 module.exports = ControllerReservaSQL;
