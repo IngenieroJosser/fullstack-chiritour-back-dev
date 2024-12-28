@@ -1,4 +1,4 @@
-const { Experiences } = require('../models/experiences_SQL');
+const { Experiences, sequelize } = require('../models/experiences_SQL');
 
 const ControllerExperienceSQL = {
     // Crear una nueva experiencia
@@ -80,14 +80,9 @@ const ControllerExperienceSQL = {
     // Obtener todas las experiencias con sus rutas relacionadas
     getExperiencesWithRoutes: async (req, res) => {
         try {
-            const experiencesWithRoutes = await Experiences.findAll({
-                include: {
-                    model: Routes, // Relación con el modelo Routes
-                    as: 'ruta',    // Alias utilizado en la asociación
-                    attributes: ['nombre', 'id_ruta'] // Selecciona solo los atributos necesarios
-                }
-            });
-            res.status(200).json(experiencesWithRoutes);
+            const query = `SELECT * FROM experiencia AS ex INNER JOIN ruta as ru on ru.id_ruta = ex.id_ruta;`;
+            const [results] = await sequelize.query(query);
+            res.status(200).json(results);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

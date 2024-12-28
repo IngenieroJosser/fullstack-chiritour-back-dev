@@ -209,7 +209,7 @@ router.delete('/:id_experiencia', experiencesController.deleteExperience);
 
 /**
  * @swagger
- * /experiences-with-routes:
+ * /api/experiences/special/experiencesWithRoutes:
  *   get:
  *     summary: Obtener todas las experiencias con sus rutas relacionadas
  *     description: Esta ruta devuelve una lista de todas las experiencias junto con las rutas asociadas, incluyendo solo los atributos 'nombre' y 'id_ruta' de las rutas.
@@ -249,6 +249,6 @@ router.delete('/:id_experiencia', experiencesController.deleteExperience);
  *                   type: string
  *                   description: Descripción del error
  */
-router.get('/experiences-with-routes', experiencesController.getExperiencesWithRoutes);
+router.get('/special/experiencesWithRoutes', experiencesController.getExperiencesWithRoutes);
 
 module.exports = router;
