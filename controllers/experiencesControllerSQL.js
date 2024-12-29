@@ -86,7 +86,32 @@ const ControllerExperienceSQL = {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    }
+    },
+
+    // Obtener todas experiencias y mapearlas en la URL (http://localhost:5173/travel)
+    getAndMapExperiences: async (req, res) => {
+        try {
+            const query = `SELECT 
+                                ruta.nombre AS nombre_ruta,
+                                ruta.descripcion AS descripcion_ruta,
+                                ruta.duracion AS duracion_ruta,
+                                ruta.precio_base AS precio_base_ruta,
+                                experiencia.fecha_realizacion,
+                                experiencia.capacidad,
+                                experiencia.estado,
+                                ubicacion.departamento
+                            FROM 
+                                experiencia
+                            INNER JOIN ruta ON experiencia.id_ruta = ruta.id_ruta
+                            INNER JOIN ubicacion ON ruta.id_ubicacion = ubicacion.id_ubicacion;
+`;
+            const [result] = await sequelize.query(query);
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json({ err: err.message });
+        }
+    },
+
 };
 
 module.exports = ControllerExperienceSQL;

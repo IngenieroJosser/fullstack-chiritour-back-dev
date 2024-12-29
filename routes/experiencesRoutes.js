@@ -40,6 +40,59 @@ router.get('/', experiencesController.getAllExperiences);
 
 /**
  * @swagger
+ * /api/experiences/all-mapped-experiences:
+ *   get:
+ *     summary: Obtiene todas las experiencias mapeadas con rutas y ubicaciones
+ *     tags: [experiences]
+ *     description: Devuelve una lista de experiencias con detalles sobre la ruta, la ubicación y la experiencia misma.
+ *     responses:
+ *       200:
+ *         description: Lista de experiencias con rutas y ubicaciones.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   nombre_ruta:
+ *                     type: string
+ *                     description: Nombre de la ruta asociada
+ *                   descripcion_ruta:
+ *                     type: string
+ *                     description: Descripción de la ruta
+ *                   duracion_ruta:
+ *                     type: integer
+ *                     description: Duración de la ruta en horas
+ *                   fecha_realizacion:
+ *                     type: string
+ *                     format: date
+ *                     description: Fecha de realización de la experiencia
+ *                   capacidad:
+ *                     type: integer
+ *                     description: Capacidad de la experiencia
+ *                   estado:
+ *                     type: string
+ *                     enum: [Disponible, No disponible]
+ *                     description: Estado de la experiencia
+ *                   departamento:
+ *                     type: string
+ *                     description: Departamento de la ubicación asociada a la ruta
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 err:
+ *                   type: string
+ *                   description: Mensaje de error.
+ */
+router.get('/all-mapped-experiences', experiencesController.getAndMapExperiences);
+
+/**
+ * @swagger
  * /api/experiences/{id_experiencia}:
  *   get:
  *     summary: Obtiene una experiencia por ID
@@ -212,6 +265,7 @@ router.delete('/:id_experiencia', experiencesController.deleteExperience);
  * /api/experiences/special/experiencesWithRoutes:
  *   get:
  *     summary: Obtener todas las experiencias con sus rutas relacionadas
+ *     tags: [experiences]
  *     description: Esta ruta devuelve una lista de todas las experiencias junto con las rutas asociadas, incluyendo solo los atributos 'nombre' y 'id_ruta' de las rutas.
  *     responses:
  *       200:
@@ -250,5 +304,6 @@ router.delete('/:id_experiencia', experiencesController.deleteExperience);
  *                   description: Descripción del error
  */
 router.get('/special/experiencesWithRoutes', experiencesController.getExperiencesWithRoutes);
+
 
 module.exports = router;
