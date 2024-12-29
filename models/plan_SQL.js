@@ -24,7 +24,11 @@ const Plans = sequelize.define('plan', {
   beneficios: {
     type: DataTypes.TEXT,
     allowNull: true,  // Puede ser nulo si no se proporciona
-  }
+  },
+  nombre :{
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
 }, {
   tableName: 'plan',  // Especifica el nombre de la tabla en la base de datos
   timestamps: false,  // Desactivar los campos 'createdAt' y 'updatedAt' si no existen en la tabla

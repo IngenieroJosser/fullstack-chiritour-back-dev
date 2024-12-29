@@ -21,6 +21,10 @@ const Bookings = sequelize.define('reserva', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  nombre : {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
   fecha_reserva: {
     type: DataTypes.DATEONLY,  // Usamos DATEONLY para manejar solo la fecha (sin tiempo)
     allowNull: false,
