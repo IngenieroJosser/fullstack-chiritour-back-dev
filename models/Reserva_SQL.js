@@ -44,13 +44,13 @@ const Reserva = sequelize.define('Reserva', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  id_ruta: { 
-    type: DataTypes.INTEGER, 
-    allowNull: false 
-  }, // Clave foránea hacia `ruta`
+  // id_ruta: { 
+  //   type: DataTypes.INTEGER, 
+  //   allowNull: false 
+  // }, // Clave foránea hacia `ruta`
 });
 
 // Relación: Reserva pertenece a una Ruta
-Reserva.belongsTo(Routes, { foreignKey: 'id_ruta', as: 'ruta' });
+// Reserva.belongsTo(Routes, { foreignKey: 'id_ruta', as: 'ruta' });
 
 module.exports = { Reserva, sequelize };

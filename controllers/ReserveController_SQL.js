@@ -1,3 +1,4 @@
+const { sequelize } = require('../models/location_SQL');
 const { Reserva } = require('../models/Reserva_SQL');
 
 const ControllerReservaSQL = {
@@ -54,33 +55,38 @@ const ControllerReservaSQL = {
       }
     },
 
-    // Obtener todas la reservas con las rutas y ubicaciones
-    getReservationsWithRouteAndLocation: async (req, res) => {
+    // Obtener el destino de las rutas
+    getDestinationReserve: async (req, res) => {
       try {
-        const reservas = await Reserva.findAll({
-          include: [
-            {
-              model: Routes,
-              as: 'ruta',
-              include: [
-                {
-                  model: Locations,
-                  as: 'ubicacion',
-                  attributes: ['nombre', 'departamento', 'municipio'], // Campos específicos
-                },
-              ],
-              attributes: ['nombre', 'descripcion'], // Campos específicos
-            },
-          ],
-          attributes: ['id', 'destino', 'fecha_inicio', 'fecha_fin', 'numero_personas', 'tipo_tour'], // Campos de `Reserva`
-        });
-  
-        res.status(200).json(reservas);
-      } catch (error) {
-        console.error('Error al obtener reservas:', error);
-        res.status(500).json({ error: error.message });
+        const query = `SELECT destino FROM reservas`;
+        const [resultDestination] = await sequelize.query(query);
+        res.status(200).json(resultDestination);
+      } catch (err) {
+        res.status(500).json({ err: err.message });
       }
     },
+
+    // Obtener las rutas de las reservas
+    getRoutesReserve: async (req, res) => {
+      try {
+        const query = `SELECT nombre FROM ruta`;
+        const [resultRoutes] = await sequelize.query(query);
+        res.status(200).json(resultRoutes);
+      } catch (err) {
+        res.status(500).json({ err: err.message });
+      }
+    },
+
+    // Obtener fecha de las reservas
+    getDateReserve: async (req, res) => {
+      try {
+        const query = `SELECT fecha_inicio FROM reservas`;
+        const [resultDate] = await sequelize.query(query);
+        res.status(200).json(resultDate);
+      } catch (err) {
+        res.status(500).json({ err: err.message });
+      }
+    }
 }
 
 module.exports = ControllerReservaSQL;
