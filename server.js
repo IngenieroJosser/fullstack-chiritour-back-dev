@@ -41,7 +41,7 @@ sequelize.sync().then(() => {
   app.listen(3000, () => {
     console.log('Servidor corriendo en http://localhost:3000');
     console.log('Servidor corriendo en http://localhost:3000/api-docs');
-    console.log('Conectado a la base de datos MySQL');
+    console.log('Conectado a la base de datos MySQL server');
   });
 }).catch(err => {
   console.error('Error al conectar a MySQL:', err.message);
