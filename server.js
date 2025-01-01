@@ -1,7 +1,5 @@
 const express = require('express');
-const path = require('path'); // Asegúrate de importar el módulo 'path'
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const { sequelize } = require('./models/Reserva_SQL');
 const reservasRoutes = require('./routes/reservasRoutesSQL');
 const usersRoutesSQL = require('./routes/usersRoutesSQL');
@@ -16,18 +14,16 @@ const quotasRoutes = require('./routes/quotasRoutes');
 const multimediaRoutes = require('./routes/multimediasRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
+const cors = require('cors')
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
 
 // Configuración de Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(cors());
 
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Rutas de la API
+// Rutas
 app.use('/api/reservas', reservasRoutes);
 app.use('/api/users', usersRoutesSQL);
 app.use('/api/dropbox', dropboxRoutes);
@@ -40,16 +36,11 @@ app.use('/api/buyers', buyersRoutes);
 app.use('/api/quotas', quotasRoutes);
 app.use('/api/multimedia', multimediaRoutes);
 
-// Manejar todas las rutas no definidas y devolver el archivo index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 // Conexión a la base de datos y servidor
 sequelize.sync().then(() => {
   app.listen(3000, () => {
     console.log('Servidor corriendo en http://localhost:3000');
-    console.log('Documentación de la API en http://localhost:3000/api-docs');
+    console.log('Servidor corriendo en http://localhost:3000/api-docs');
     console.log('Conectado a la base de datos MySQL server');
   });
 }).catch(err => {
