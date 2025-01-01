@@ -15,8 +15,10 @@ const multimediaRoutes = require('./routes/multimediasRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger');
 const cors = require('cors')
+require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // Configuración de Swagger
@@ -38,9 +40,9 @@ app.use('/api/multimedia', multimediaRoutes);
 
 // Conexión a la base de datos y servidor
 sequelize.sync().then(() => {
-  app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
-    console.log('Servidor corriendo en http://localhost:3000/api-docs');
+  app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
+    console.log(`Servidor corriendo en http://localhost:${port}/api-docs`);
     console.log('Conectado a la base de datos MySQL server');
   });
 }).catch(err => {
